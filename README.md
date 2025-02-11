@@ -12,4 +12,10 @@ TeamCollab is a comprehensive team collaboration platform built with Next.js, Re
 
 1. Clone the repository:
 
- 
+  Set Up Environment Variables
+  GOOGLE_CLIENT_ID= 
+MONGODB_URI= 
+NEXTAUTH_SECRET 
+NEXTAUTH_URL 
+
+
