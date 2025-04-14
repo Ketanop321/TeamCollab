@@ -2,7 +2,7 @@
   "version": 2,
   "buildCommand": "next build",
   "devCommand": "next dev",
-  "installCommand": "npm install",
+  "installCommand": "npm install --legacy-peer-deps",
   "framework": "nextjs",
   "regions": ["iad1"],
   "env": {

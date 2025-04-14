@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   })
 
   try {
-    const { prompt, type = "text" } = await request.json()
+    const { prompt, type = "text", imageData } = await request.json()
 
     if (!prompt) {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 })
@@ -28,13 +28,32 @@ export async function POST(request: Request) {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey)
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" })
+    
+    // Use the correct model based on request type
+    const modelName = type === "image" ? "gemini-1.5-pro-vision" : "gemini-1.5-pro"
+    const model = genAI.getGenerativeModel({ model: modelName })
 
-    // Race between the actual request and the timeout
-    const result = (await Promise.race([model.generateContent(prompt), timeoutPromise])) as any
+    let result: any;
+    
+    if (type === "image" && imageData) {
+      // Process image request
+      const imageObj = {
+        inlineData: {
+          data: imageData.replace(/^data:image\/\w+;base64,/, ''),
+          mimeType: imageData.match(/^data:(image\/\w+);base64,/)?.[1] || 'image/jpeg',
+        },
+      };
+      
+      const geminiRequest = model.generateContent([prompt, imageObj]);
+      result = await Promise.race([geminiRequest, timeoutPromise]);
+    } else {
+      // Process text-only request
+      const geminiRequest = model.generateContent(prompt);
+      result = await Promise.race([geminiRequest, timeoutPromise]);
+    }
 
-    const response = await result.response
-
+    const response = await result.response;
+    
     return NextResponse.json({ text: response.text() })
   } catch (error: any) {
     console.error("Error generating AI content:", error)
