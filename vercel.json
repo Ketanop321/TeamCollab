@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "MONGODB_URI": "mongodb+srv://ketanop473:2bDXxJV8gYOfKwj8@cluster0.xo6vr.mongodb.net/teamcollab",
+    "NEXTAUTH_URL": "https://teamcollab-platform.vercel.app",
+    "NEXTAUTH_SECRET": "c4f62e82b7d9ce74f57c72f39b783aac0509e993d97fc70395dcf5362c426ecb"
+  },
+  "build": {
+    "env": {
+      "MONGODB_URI": "mongodb+srv://ketanop473:2bDXxJV8gYOfKwj8@cluster0.xo6vr.mongodb.net/teamcollab",
+      "NEXTAUTH_URL": "https://teamcollab-platform.vercel.app",
+      "NEXTAUTH_SECRET": "c4f62e82b7d9ce74f57c72f39b783aac0509e993d97fc70395dcf5362c426ecb"
+    }
+  }
+}
